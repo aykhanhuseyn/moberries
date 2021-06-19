@@ -1,0 +1,158 @@
+@mixin flex(
+	$ai: null,
+	$jc: null,
+	$pi: null,
+	$d: null,
+	$g: null,
+	$fb: null,
+	$fg: null,
+	$fs: null,
+	$w: null,
+	$dp: flex
+) {
+	display: $dp;
+
+	@if $jc {
+		justify-content: $jc;
+	}
+
+	@if $ai {
+		align-items: $ai;
+	}
+
+	@if $pi {
+		place-items: $pi;
+	}
+
+	@if $d {
+		flex-direction: $d;
+	}
+
+	@if $g {
+		gap: $g;
+	}
+
+	@if $w {
+		flex-wrap: $w;
+	}
+
+	@if $fb {
+		flex-basis: $fb;
+	}
+	@if $fg {
+		flex-grow: $fg;
+	}
+	@if $fs {
+		flex-shrink: $fs;
+	}
+}
+
+@mixin grid(
+	$tc: null,
+	$tr: null,
+	$ta: null,
+	$ai: null,
+	$jc: null,
+	$pi: null,
+	$g: null,
+	$dp: grid
+) {
+	display: $dp;
+
+	@if $tc {
+		grid-template-columns: $tc;
+	}
+
+	@if $tr {
+		grid-template-rows: $tr;
+	}
+
+	@if $ta {
+		grid-template-areas: $ta;
+	}
+
+	@if $jc {
+		justify-content: $jc;
+	}
+
+	@if $ai {
+		align-items: $ai;
+	}
+
+	@if $pi {
+		place-items: $pi;
+	}
+
+	@if $g {
+		gap: $g;
+	}
+}
+
+@mixin figure(
+	$w: null,
+	$wmin: null,
+	$wmax: null,
+	$h: $w,
+	$hmin: null,
+	$hmax: null,
+	$r: null,
+	$dp: null
+) {
+	@if $w {
+		width: $w;
+	}
+	@if $wmin {
+		min-width: $wmin;
+	}
+	@if $wmax {
+		max-width: $wmax;
+	}
+	@if $h {
+		height: $h;
+	}
+	@if $hmin {
+		min-height: $hmin;
+	}
+	@if $hmax {
+		max-height: $hmax;
+	}
+	@if $r {
+		border-radius: $r;
+	}
+	@if $dp {
+		display: $dp;
+	}
+}
+
+@mixin border($w: null, $s: null, $c: null, $r: null) {
+	@if $w {
+		border-width: $w;
+	}
+	@if $s {
+		border-style: $s;
+	}
+	@if $c {
+		border-color: $c;
+	}
+	@if $r {
+		border-radius: $r;
+	}
+}
+
+@mixin shadow($x: 0, $y: 0, $blur: 0, $spread: 0, $color: #000000) {
+	box-shadow: $x $y $blur $spread $color;
+}
+
+// gradient text
+@mixin textGradient($color1: null, $color2: null) {
+	@if ($color1 == null or $color2 == null) {
+		@debug;
+		@error 'colors can not be null';
+	}
+	background: $color1;
+	background: -webkit-linear-gradient(to right, $color1 14%, $color2 98%);
+	background: -moz-linear-gradient(to right, $color1 14%, $color2 98%);
+	background: linear-gradient(to right, $color1 14%, $color2 98%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}

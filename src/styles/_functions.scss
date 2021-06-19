@@ -1,0 +1,5 @@
+@import './variables';
+
+@function toRem($size) {
+	@return #{$size/$baseFontSize}rem;
+}

@@ -1,0 +1,15 @@
+@import './mixins';
+@import './variables';
+
+%container {
+	width: 90%;
+	margin: 0 auto;
+}
+
+%shadow-sm {
+	@include shadow(3px 4px 10px 5px $gray);
+}
+
+%shadow-md {
+	@include shadow(5px 5px 15px 7px $gray);
+}

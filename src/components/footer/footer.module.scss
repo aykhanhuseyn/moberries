@@ -1,0 +1,19 @@
+@import '../../styles/placeholder';
+@import '../../styles/mixins';
+@import '../../styles/functions';
+
+._root {
+	height: 200px;
+	width: 100%;
+
+	._container {
+		@extend %container;
+		padding: 10px;
+		@include flex($jc: center, $ai: center);
+	}
+
+	&__text {
+		font-size: toRem(16px);
+		text-align: center;
+	}
+}

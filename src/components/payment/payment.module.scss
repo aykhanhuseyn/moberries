@@ -1,0 +1,59 @@
+@import '../../styles/mixins';
+@import '../../styles/variables';
+@import '../../styles/functions';
+@import '../../styles/placeholder';
+
+%volume {
+	@include flex($jc: center, $ai: center);
+	@include border(1px, solid, $gray, 14px);
+	min-width: 100px;
+	min-height: 60px;
+	padding: 2px 5px;
+}
+
+._title > * {
+	@include textGradient($color1: $red, $color2: $gray);
+	font-size: toRem(30px) !important;
+	font-weight: 700;
+	letter-spacing: 1px;
+	text-align: center;
+}
+
+._volume {
+	@extend %volume;
+	transition: all 0.3s;
+	@extend %shadow-sm;
+
+	&--selected {
+		@extend %volume;
+		border-color: $red;
+		@extend %shadow-md;
+		background-color: rgba($color: $red, $alpha: 0.1);
+	}
+
+	&__value {
+		@include textGradient($color1: $red, $color2: $gray);
+		font-size: toRem(30px);
+		font-weight: 700;
+		letter-spacing: 1px;
+		text-align: center;
+	}
+}
+
+._root {
+	@include flex($jc: center, $g: 20px, $w: wrap);
+}
+
+._radio {
+	& > label {
+		background: unset !important;
+		border: unset !important;
+		outline: unset !important;
+		height: 60px;
+		margin-bottom: 10px;
+
+		&::before {
+			content: unset !important;
+		}
+	}
+}
