@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/moberries/static/css/main.1ef91878.chunk.css",
+    "main.js": "/moberries/static/js/main.387a8205.chunk.js",
+    "main.js.map": "/moberries/static/js/main.387a8205.chunk.js.map",
+    "runtime-main.js": "/moberries/static/js/runtime-main.7de200b5.js",
+    "runtime-main.js.map": "/moberries/static/js/runtime-main.7de200b5.js.map",
+    "static/css/2.1158724b.chunk.css": "/moberries/static/css/2.1158724b.chunk.css",
+    "static/js/2.736ca598.chunk.js": "/moberries/static/js/2.736ca598.chunk.js",
+    "static/js/2.736ca598.chunk.js.map": "/moberries/static/js/2.736ca598.chunk.js.map",
+    "static/js/3.a169d2e0.chunk.js": "/moberries/static/js/3.a169d2e0.chunk.js",
+    "static/js/3.a169d2e0.chunk.js.map": "/moberries/static/js/3.a169d2e0.chunk.js.map",
+    "index.html": "/moberries/index.html",
+    "static/css/2.1158724b.chunk.css.map": "/moberries/static/css/2.1158724b.chunk.css.map",
+    "static/css/main.1ef91878.chunk.css.map": "/moberries/static/css/main.1ef91878.chunk.css.map",
+    "static/js/2.736ca598.chunk.js.LICENSE.txt": "/moberries/static/js/2.736ca598.chunk.js.LICENSE.txt",
+    "static/media/logo.333d2cc5.svg": "/moberries/static/media/logo.333d2cc5.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7de200b5.js",
+    "static/css/2.1158724b.chunk.css",
+    "static/js/2.736ca598.chunk.js",
+    "static/css/main.1ef91878.chunk.css",
+    "static/js/main.387a8205.chunk.js"
+  ]
+}
