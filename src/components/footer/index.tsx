@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Total from '../total';
+import Total from '../total/amount';
 import s from './footer.module.scss';
 
 const Footer: FC = () => {

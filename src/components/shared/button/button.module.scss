@@ -1,0 +1,74 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+@import '../../../styles/functions';
+
+%button {
+	@include flex($dp: inline-flex, $jc: center, $ai: center, $g: 10px);
+	font-size: toRem(16px);
+}
+
+// color options
+._primary {
+	@extend %button;
+	background-color: $base;
+	color: $white;
+	border: none;
+	transition: background-color 0.3s;
+
+	&:hover {
+		background-color: adjust-color($color: $base, $lightness: -10%);
+	}
+}
+._secondary {
+	@extend %button;
+	background-color: $gray;
+	color: $white;
+	border: none;
+	transition: background-color 0.3s;
+
+	&:hover {
+		background-color: rgba($color: $base, $alpha: 0.7);
+	}
+}
+._link {
+	@extend %button;
+	background-color: transparent;
+	border: none;
+	color: $purple;
+	fill: $purple;
+	transition: all 0.3s;
+
+	&:hover {
+		background-color: rgba($color: $gray, $alpha: 0.7);
+	}
+}
+
+// size options
+._default {
+	@include figure($wmin: 50px, $hmin: 50px);
+	@include border($r: 10px);
+	font-weight: 400;
+	padding: 8px 14px;
+}
+._small {
+	@include figure($wmin: 50px, $hmin: 50px);
+	@include border($r: 8px);
+	font-weight: 300;
+	padding: 6px 10px;
+}
+._large {
+	@include figure($wmin: 100px, $hmin: 50px);
+	@include border($r: 14px);
+	font-weight: 700;
+	padding: 12px 20px;
+}
+._full {
+	@include figure($wmin: 100px, $hmin: 50px, $w: 100%);
+	@include border($r: 14px);
+	font-weight: 700;
+	padding: 12px 20px;
+}
+._fullstart {
+	@extend ._full;
+	justify-content: flex-start;
+}

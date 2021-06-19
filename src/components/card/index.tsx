@@ -1,25 +1,30 @@
 import { Form, Input, Button } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Title from '../shared/title';
 import Cleave from 'cleave.js/react';
 import moment from 'moment';
 import s from '../payment/payment.module.scss';
-import { setActiveTab, enableTab, disableTab } from '../../redux/slice';
+import {
+	setActiveTab,
+	enableTab,
+	disableTab,
+	setCard,
+} from '../../redux/slice';
 
 const CardForm = () => {
 	const dispatch = useDispatch();
 	const [form] = Form.useForm();
 
-	const onFinish = async (values: any) => {
-		console.log(values);
+	const onFinish = async (values: { pan: string; exp: string; cvv: string }) => {
+		process.env.NODE_ENV === 'development' && console.log(values);
+		await dispatch(setCard(values));
 		await dispatch(enableTab('confirm'));
 		dispatch(setActiveTab('confirm'));
 	};
 
 	const onReset = async () => {
 		form.resetFields();
-    await dispatch(disableTab('confirm'));
-
+		await dispatch(disableTab('confirm'));
 	};
 
 	return (
@@ -51,7 +56,8 @@ const CardForm = () => {
 					placeholder='XXXX XXXX XXXX XXXX'
 					options={{ creditCard: true }}
 					onChange={(event) => {
-						console.log(event.target.rawValue, event.target.value);
+						process.env.NODE_ENV === 'development' &&
+							console.log(event.target.rawValue, event.target.value);
 					}}
 				/>
 			</Form.Item>
@@ -71,7 +77,8 @@ const CardForm = () => {
 						datePattern: ['m', 'y'],
 					}}
 					onChange={(event) => {
-						console.log(event.target.rawValue, event.target.value);
+						process.env.NODE_ENV === 'development' &&
+							console.log(event.target.rawValue, event.target.value);
 					}}
 				/>
 			</Form.Item>

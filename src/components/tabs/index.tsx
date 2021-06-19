@@ -56,7 +56,7 @@ const TabList: FC = () => {
 
 	useEffect(() => {
 		function handleResize() {
-			console.log(tabPosition, window.innerWidth);
+			process.env.NODE_ENV === 'development' && console.log(tabPosition, window.innerWidth);
 			if (tabPosition !== 'left' && window.innerWidth > 996) {
 				setTabPosition('left');
 			}

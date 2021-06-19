@@ -37,7 +37,7 @@ const Payment = () => {
 	};
 
 	const onSubmit = (values: any) => {
-		console.log(values);
+		process.env.NODE_ENV === 'development' && console.log(values);
 		dispatch(setActiveTab('creditcard'));
 	};
 

@@ -35,9 +35,8 @@ export const fetchPrices = createAsyncThunk(
 	'subscriptions/fetchPrices',
 	async (_: void, { rejectWithValue }): Promise<any> => {
 		try {
-			const data = await requestHandler(axios.get, s.PRICES);
+			const data = await requestHandler(axios.get, [s.PRICES]);
 			const subscriptions: SubscriptionPlans = data.subscription_plans;
-			console.log('object', data.subscription_plans);
 			return subscriptions;
 		} catch (e) {
 			process?.env?.NODE_ENV === 'development' && console.log(e);
@@ -48,7 +47,16 @@ export const fetchPrices = createAsyncThunk(
 
 export const submitSubscription = createAsyncThunk(
 	'subscriptions/submitSubscription',
-	async (data) => axios.post(s.SUBMIT, data)
+	async (form: any, { rejectWithValue }) => {
+		try {
+			const data = await requestHandler(axios.post, [s.SUBMIT, form]);
+			process.env.NODE_ENV === 'development' && console.log('object', data.subscription_plans);
+			return data;
+		} catch (e) {
+			process?.env?.NODE_ENV === 'development' && console.log(e);
+			return rejectWithValue(e);
+		}
+	}
 );
 
 export const subscriptionsSlice = createSlice({
@@ -108,7 +116,10 @@ export const subscriptionsSlice = createSlice({
 				},
 			};
 		},
-		'subscriptions/fetchPrices/fulfilled': function (state, { payload }): IState {
+		'subscriptions/fetchPrices/fulfilled': function (
+			state: IState,
+			{ payload }
+		): IState {
 			return {
 				...state,
 				subscription_plans: payload,
@@ -133,33 +144,45 @@ export const subscriptionsSlice = createSlice({
 				},
 			};
 		},
-		// [submitSubscription.pending]: (state) => ({
-		// 	...state,
-		// 	request: {
-		// 		...state.request,
-		// 		status: 'loading',
-		// 	},
-		// }),
-		// [submitSubscription.fulfilled]: (_, { payload }) => ({
-		// 	subscription_plans: payload,
-		// 	request: {
-		// 		status: 'idle',
-		// 		message: null,
-		// 	},
-		// }),
-		// [submitSubscription.rejected]: (state, { payload }) => ({
-		// 	...state,
-		// 	request: {
-		// 		status: 'error',
-		// 		message: {
-		// 			title: payload.error,
-		// 			description: payload.description,
-		// 		},
-		// 	},
-		// }),
+		'subscriptions/submitSubscription/pending': function (state: IState): IState {
+			return {
+				...state,
+				request: {
+					...state.request,
+					status: 'loading',
+				},
+			};
+		},
+		'subscriptions/submitSubscription/fulfilled': function (
+			state: IState
+		): IState {
+			return {
+				...state,
+				request: {
+					status: 'idle',
+					message: null,
+				},
+			};
+		},
+		'subscriptions/submitSubscription/rejected': function (
+			state: IState,
+			{ payload }
+		): IState {
+			return {
+				...state,
+				request: {
+					status: 'error',
+					message: {
+						title: payload.error,
+						description: payload.description,
+					},
+				},
+			};
+		},
 	},
 });
 
+//#region actions
 export const {
 	setLoading,
 	setError,
@@ -173,7 +196,10 @@ export const {
 	enableTab,
 	disableTab,
 } = subscriptionsSlice.actions;
+//#endregion
 
+//#region selection
+export const getForm = (store: RootState) => store.subscriptions.form;
 export const getDuration = (store: RootState) =>
 	store.subscriptions.form.parameters.duration;
 export const getVolume = (store: RootState) =>
@@ -182,6 +208,9 @@ export const getUpfront = (store: RootState) =>
 	store.subscriptions.form.parameters.upfront;
 export const getParameters = (store: RootState) =>
 	store.subscriptions.form.parameters;
+export const getCard = (store: RootState) => store.subscriptions.form.card;
+export const getEmail = (store: RootState) =>
+	store.subscriptions.form.confirm.email;
 export const getLoading = (store: RootState) =>
 	store.subscriptions.request.status;
 export const getStatus = (store: RootState) => store.subscriptions.request;
@@ -191,5 +220,6 @@ export const getActiveTab = (store: RootState) =>
 	store.subscriptions.tabs.active;
 export const getEnabledTabs = (store: RootState) =>
 	store.subscriptions.tabs.enabledTabs;
+//#endregion
 
 export default subscriptionsSlice.reducer;

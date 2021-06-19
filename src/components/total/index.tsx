@@ -1,45 +1,48 @@
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import parameters from '../../entities/subscription_parameters';
-import { getSubcriptionPlans, getParameters } from '../../redux/slice';
-import s from './total.module.scss';
+import { Form, Input, Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	getParameters,
+	getCard,
+	setEmail,
+	submitSubscription,
+} from '../../redux/slice';
+import Amount from './amount';
 
-const Total = () => {
-	const plans = useSelector(getSubcriptionPlans);
-	const store = useSelector(getParameters);
-	const [amount, setAmount] = useState(0);
+const TotalPage = () => {
+	const dispatch = useDispatch();
+	const params = useSelector(getParameters);
+	const card = useSelector(getCard);
 
-	useEffect(() => {
-		const perGb: number =
-			plans.find((x) => x.duration_months === store.duration)?.price_usd_per_gb ||
-			0;
-		const p = perGb * store.volume * (store.upfront ? 0.9 : 1);
-		setAmount(p);
-	}, [plans, store]);
+	const handleSubmit = async (values: { email: string }) => {
+		process.env.NODE_ENV === 'development' && console.log(values);
+		await dispatch(setEmail(values.email));
+		dispatch(submitSubscription({ ...params, ...card, email: values.email }));
+	};
 
 	return (
-		<div className={s._container}>
-			<p className={s._text}>
-				{'Volume: '}
-				<span className={s._text__value}>
-					{parameters.VOLUMES.find((x) => x.value === store.volume)?.label}
-				</span>
-			</p>
-			<p className={s._text}>
-				{'Duration with month: '}
-				<span className={s._text__value}>
-					{parameters.DURATIONS.find((x) => x.value === store.duration)?.label}
-				</span>
-			</p>
-			<p className={s._text}>
-				{'Amount: '}
-				<span className={s._text__value}>
-					{store.upfront ? `$${amount}` : `$${amount} / per month`}
-				</span>
-				{!store.upfront && <span>{`  (Total: $${amount * store.duration})`}</span>}
-			</p>
-		</div>
+		<>
+			<Amount />
+			<Form layout='vertical' onFinish={handleSubmit}>
+				<Form.Item
+					label='Email'
+					name='email'
+					rules={[
+						{ type: 'email', message: 'Email format is not correct!' },
+						{ required: true, message: 'Email is required!' },
+					]}
+				>
+					<Form.Item>
+						<Input.Group compact style={{ display: 'flex' }}>
+							<Input />
+							<Button type='primary' htmlType='submit' style={{ height: '50px' }}>
+								Submit
+							</Button>
+						</Input.Group>
+					</Form.Item>
+				</Form.Item>
+			</Form>
+		</>
 	);
 };
 
-export default Total;
+export default TotalPage;

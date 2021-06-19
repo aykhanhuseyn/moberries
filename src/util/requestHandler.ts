@@ -2,12 +2,12 @@ import axios from 'axios';
 
 export default async function requestHandler(
   func: Function,
-  params: any,
+  params: any[],
 	showError: boolean = true
 ): Promise<any> {
   return new Promise(async (resolve, reject) => {
     try {
-      const { data } = await func(params);
+      const { data } = await func(...params);
       return resolve(data);
     } catch (e) {
       let error, message;

@@ -8,7 +8,7 @@ const Home = () => {
 
 	useEffect(() => {
 		dispatch(fetchPrices());
-	}, []);
+	});
 
 	return <TabList />;
 };
