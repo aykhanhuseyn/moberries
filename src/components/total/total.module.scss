@@ -20,3 +20,30 @@
 		font-size: toRem(22px);
 	}
 }
+
+._title {
+	margin: 10px 0 0px 20px;
+	justify-content: center;
+
+	& > * {
+		@include textGradient($color1: $red, $color2: $gray);
+		font-size: toRem(30px) !important;
+		font-weight: 700;
+		letter-spacing: 1px;
+	}
+}
+
+._form {
+	margin: 0 auto;
+	max-width: 60%;
+
+	@media screen and (max-width: 1200px) {
+		max-width: 70%;
+	}
+	@media screen and (max-width: 800px) {
+		max-width: 80%;
+	}
+	@media screen and (max-width: 500px) {
+		max-width: 90%;
+	}
+}

@@ -50,7 +50,8 @@ export const submitSubscription = createAsyncThunk(
 	async (form: any, { rejectWithValue }) => {
 		try {
 			const data = await requestHandler(axios.post, [s.SUBMIT, form]);
-			process.env.NODE_ENV === 'development' && console.log('object', data.subscription_plans);
+			process.env.NODE_ENV === 'development' &&
+				console.log('object', data.subscription_plans);
 			return data;
 		} catch (e) {
 			process?.env?.NODE_ENV === 'development' && console.log(e);
@@ -104,6 +105,9 @@ export const subscriptionsSlice = createSlice({
 			state.tabs.enabledTabs = [
 				...state.tabs.enabledTabs.filter((x) => x !== payload),
 			];
+		},
+		resetState: (state) => {
+			state = { ...initial };
 		},
 	},
 	extraReducers: {
@@ -195,6 +199,7 @@ export const {
 	setActiveTab,
 	enableTab,
 	disableTab,
+	resetState,
 } = subscriptionsSlice.actions;
 //#endregion
 
@@ -211,9 +216,11 @@ export const getParameters = (store: RootState) =>
 export const getCard = (store: RootState) => store.subscriptions.form.card;
 export const getEmail = (store: RootState) =>
 	store.subscriptions.form.confirm.email;
-export const getLoading = (store: RootState) =>
+export const getStatus = (store: RootState) =>
 	store.subscriptions.request.status;
-export const getStatus = (store: RootState) => store.subscriptions.request;
+export const getMessage = (store: RootState) =>
+	store.subscriptions.request.message;
+export const getRequest = (store: RootState) => store.subscriptions.request;
 export const getSubcriptionPlans = (store: RootState) =>
 	store.subscriptions.subscription_plans;
 export const getActiveTab = (store: RootState) =>

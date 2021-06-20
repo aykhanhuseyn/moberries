@@ -40,7 +40,7 @@ const CardForm = () => {
 				text='Add payment details.'
 				element='h4'
 				size='md'
-				style={{ margin: '10px 0 20px 20px' }}
+				style={{ margin: '10px 0 20px 20px', justifyContent: 'center' }}
 			/>
 
 			<Form.Item
@@ -96,16 +96,21 @@ const CardForm = () => {
 				<Input placeholder='XXX' type='number' />
 			</Form.Item>
 
-			<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+			<Form.Item wrapperCol={{ offset: 4, span: 16 }}>
 				<Button
 					type='primary'
 					htmlType='submit'
 					size='large'
-					style={{ marginRight: '20px' }}
+					style={{ marginRight: '4%', width: '48%' }}
 				>
 					Submit
 				</Button>
-				<Button htmlType='button' onClick={onReset} size='large'>
+				<Button
+					htmlType='button'
+					onClick={onReset}
+					size='large'
+					style={{ width: '48%' }}
+				>
 					Reset
 				</Button>
 			</Form.Item>

@@ -31,8 +31,8 @@ const Payment = () => {
 	};
 	const onChangeUpfont: (value: boolean) => void = (value: boolean) => {
 		dispatch(setUpfront(value));
-		notification.info({
-			message: `Discount ${value ? 'enabled' : 'disabled'}.`,
+		notification[value ? 'success' : 'error']({
+			message: `Discount ${value ? 'applied' : 'disabled'}.`,
 		});
 	};
 
@@ -55,7 +55,7 @@ const Payment = () => {
 				text='Select subscription parameters.'
 				element='h4'
 				size='md'
-				style={{ margin: '10px 0 20px 20px' }}
+				style={{ margin: '10px 0 20px 20px', justifyContent: 'center' }}
 			/>
 			<Form.Item label='Volumes' name='volume' style={styles}>
 				<Radio.Group
