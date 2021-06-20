@@ -1,10 +1,21 @@
-import { useState, useEffect } from 'react';
+import {
+	FC,
+	useState,
+	useEffect,
+	DetailedHTMLProps,
+	HTMLAttributes,
+} from 'react';
 import { useSelector } from 'react-redux';
 import parameters from '../../entities/subscription_parameters';
 import { getSubcriptionPlans, getParameters } from '../../redux/slice';
 import s from './total.module.scss';
 
-const Total = () => {
+interface IAmountProps
+	extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+	className?: string;
+}
+
+const Amount: FC<IAmountProps> = ({ className = '', ...rest }) => {
 	const plans = useSelector(getSubcriptionPlans);
 	const store = useSelector(getParameters);
 	const [amount, setAmount] = useState(0);
@@ -18,7 +29,7 @@ const Total = () => {
 	}, [plans, store]);
 
 	return (
-		<div className={s._container}>
+		<div className={[s._container, className].join(' ')} {...rest}>
 			<p className={s._text}>
 				{'Volume: '}
 				<span className={s._text__value}>
@@ -46,4 +57,4 @@ const Total = () => {
 	);
 };
 
-export default Total;
+export default Amount;

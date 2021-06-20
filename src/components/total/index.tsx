@@ -8,7 +8,6 @@ import {
 	submitSubscription,
 	getStatus,
 	getMessage,
-	resetState,
 	setActiveTab,
 } from '../../redux/slice';
 import Title from '../shared/title';
@@ -51,8 +50,10 @@ const TotalPage = () => {
 				text='Add your email to confirm payment.'
 				element='h4'
 				size='md'
+				style={{ margin: '10px 0 0 20px', justifyContent: 'center' }}
 			/>
-			<Amount />
+
+			<Amount className={s._form} />
 
 			<Form layout='vertical' onFinish={handleSubmit}>
 				<Form.Item

@@ -10,6 +10,7 @@ import {
 	disableTab,
 	setCard,
 } from '../../redux/slice';
+import luhnCheck from '../../util/luhnCheck';
 
 const CardForm = () => {
 	const dispatch = useDispatch();
@@ -48,17 +49,21 @@ const CardForm = () => {
 				label='Card Number'
 				rules={[
 					{ required: true, message: 'Card Number is required!' },
-					{ len: 19, message: 'Card have to contain 16 symbols.' },
+					{ len: 19, message: 'Card have to contain 16 digits.' },
+					{
+						validator(_, value) {
+							if (!value || value.length !== 19 || luhnCheck(value)) {
+								return Promise.resolve();
+							}
+							return Promise.reject(new Error('Not a valid credit card!'));
+						},
+					},
 				]}
 			>
 				<Cleave
 					className='ant-input'
 					placeholder='XXXX XXXX XXXX XXXX'
 					options={{ creditCard: true }}
-					onChange={(event) => {
-						process.env.NODE_ENV === 'development' &&
-							console.log(event.target.rawValue, event.target.value);
-					}}
 				/>
 			</Form.Item>
 
@@ -76,10 +81,6 @@ const CardForm = () => {
 						delimiter: ' / ',
 						datePattern: ['m', 'y'],
 					}}
-					onChange={(event) => {
-						process.env.NODE_ENV === 'development' &&
-							console.log(event.target.rawValue, event.target.value);
-					}}
 				/>
 			</Form.Item>
 
@@ -88,15 +89,18 @@ const CardForm = () => {
 				label='CVV'
 				rules={[
 					{ required: true, message: 'CVV is required!' },
-					{ pattern: new RegExp(/\d{3,4}/g), message: 'Value is not valid CVV!' },
-					{ max: 4, message: 'CVV can not be longer than 4 chars!' },
-					{ min: 3, message: 'CVV can not be less than 3 chars!' },
+					{
+						pattern: new RegExp(/\d{3,}/g),
+						message: 'Value is not valid CVV!',
+					},
 				]}
 			>
-				<Input placeholder='XXX' type='number' />
+				<Input placeholder='XXX' minLength={3} maxLength={4} />
 			</Form.Item>
 
-			<Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+			<Form.Item
+				wrapperCol={{ xs: { offset: 0, span: 24 }, sm: { offset: 4, span: 16 } }}
+			>
 				<Button
 					type='primary'
 					htmlType='submit'
